@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Bakery Palette */
+  --color-primary: #D4A373;       /* Warm Cookie Dough / Gold */
+  --color-primary-dark: #A97C50;
+  --color-secondary: #FEFAE0;     /* Cream / Vanilla */
+  --color-accent: #E76F51;        /* Terracotta / Berry */
+  --color-accent-hover: #C5533D;
+  
+  --color-background: #FAF9F6;    /* Off-white / Flour */
+  --color-surface: #FFFFFF;
+  --color-surface-dim: #F2F0EA;
+
+  --color-text: #2D241E;          /* Dark Chocolate */
+  --color-text-muted: #6B5D52;
+  --color-text-invert: #FFFFFF;
+
+  --color-success: #2A9D8F;
+  --color-error: #E63946;
+  --color-warning: #E9C46A;
+
+  /* Spacing & Layout */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Animation */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+}
+
+/* Dark Mode (Optional but good to have foundation) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #1A1512;    /* Dark Coffee */
+    --color-surface: #241E19;
+    --color-surface-dim: #2D2620;
+    --color-text: #FEFAE0;
+    --color-text-muted: #A0938A;
+    --color-text-invert: #1A1512;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+body {
+  color: var(--color-text);
+  background: var(--color-background);
+  font-family: 'Outfit', sans-serif; /* Fallback if Next font fails, but we use Next font usually */
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Utility Classes (Vanilla CSS Design System) */
+
+/* Typography */
+.text-h1 { font-size: 2.5rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+.text-h2 { font-size: 2rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+.text-h3 { font-size: 1.5rem; font-weight: 600; line-height: 1.3; }
+.text-body { font-size: 1rem; line-height: 1.5; }
+.text-sm { font-size: 0.875rem; line-height: 1.4; }
+.text-xs { font-size: 0.75rem; line-height: 1.4; }
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 500; }
+
+/* Colors */
+.text-primary { color: var(--color-primary); }
+.text-accent { color: var(--color-accent); }
+.text-muted { color: var(--color-text-muted); }
+.bg-primary { background-color: var(--color-primary); color: var(--color-text-invert); }
+.bg-secondary { background-color: var(--color-secondary); color: var(--color-text); }
+.bg-surface { background-color: var(--color-surface); }
+
+/* Layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+.grid { display: grid; }
+
+/* Components */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+  cursor: pointer;
+  border: none;
+}
+.btn:hover { transform: translateY(-1px); opacity: 0.9; }
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-invert);
+}
+
+.btn-accent {
+  background-color: var(--color-accent);
+  color: var(--color-text-invert);
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1rem;
+  border: 1px solid var(--color-surface-dim);
+}

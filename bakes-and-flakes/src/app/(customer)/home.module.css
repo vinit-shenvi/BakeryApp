@@ -1,0 +1,32 @@
+.main {
+    padding-bottom: 5rem;
+    /* Space for bottom nav */
+}
+
+.header {
+    padding: 1rem 0;
+    background: var(--color-surface);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: var(--shadow-sm);
+}
+
+.festiveBanner {
+    padding: 1.5rem 1rem;
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+}
+
+.scrollRow {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding: 0.5rem 0 1rem 0;
+    scrollbar-width: none;
+    /* Hide scrollbar for premium feel */
+}
+
+.scrollRow::-webkit-scrollbar {
+    display: none;
+}

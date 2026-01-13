@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // Configuring SQLite for easy local dev prototype
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+  DELIVERY_PARTNER
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY_FOR_PICKUP
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum DeliveryType {
+  HOME_DELIVERY
+  STORE_PICKUP
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String    @unique
+  password      String?   // Hashed
+  phone         String?
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  
+  // Relations
+  orders        Order[]
+  addresses     Address[]
+  wishlist      Product[] @relation("UserWishlist")
+  
+  // Delivery Partner Specific
+  isOnline      Boolean   @default(false) // For Delivery Partners
+  currentLat    Float?
+  currentLng    Float?
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  price       Float
+  image       String?
+  category    String   // e.g., "Best Sellers", "Kaju Specials"
+  isAvailable Boolean  @default(true)
+  isFestive   Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  orderItems  OrderItem[]
+  favoritedBy User[]      @relation("UserWishlist")
+}
+
+model Order {
+  id              String      @id @default(uuid())
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  status          OrderStatus @default(PENDING)
+  totalAmount     Float
+  
+  deliveryType    DeliveryType
+  deliveryAddress String?     // Snapshot of address for history
+
+  // Relations
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  
+  items           OrderItem[]
+  
+  deliveryPartnerId String?
+  // Ideally relation to User but keeping ID for simplicity if needed, or:
+  // deliveryPartner   User? @relation("DeliveryAssignments", fields: [deliveryPartnerId], references: [id])
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  quantity  Int
+  price     Float   // Snapshot price
+  
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Address {
+  id        String  @id @default(uuid())
+  street    String
+  city      String
+  zip       String
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+}
+
+model FestivalCampaign {
+  id        String   @id @default(uuid())
+  name      String   // e.g., "Cricket World Cup 2026"
+  isActive  Boolean  @default(false)
+  bannerUrl String?
+}
